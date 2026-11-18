@@ -1,28 +1,21 @@
 package com.example;
 
-import java.io.*;
-import java.net.*;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        try (ServerSocket ss = new ServerSocket(3000)) {
+            System.out.println("Server avviato sulla porta 3000...");
 
-        System.out.println("Hello world!");
+            while (true) {
+                Socket s = ss.accept();
+                System.out.println("WELCOME");
 
-        ServerSocket ss = new ServerSocket(3000);
-        Socket socket = ss.accept();
-
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
-        PrintWriter out = new PrintWriter(
-                new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
-
-
-
-
-
-
-                
+                Thread t = new mioThread(s);
+                t.start();
+            }
+        }
     }
-
 }

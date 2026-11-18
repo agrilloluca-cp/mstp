@@ -4,22 +4,21 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
-public class MioThread extends Thread {
+public class mioThread extends Thread {
 
     private Socket s;
 
-    public void mioThread(Socket s)  {
-            this.s = s;
-
+    public mioThread(Socket s) {
+        this.s = s;
     }
 
- @Override
+    @Override
     public void run() {
         try (Socket socket = this.s;
-             BufferedReader in = new BufferedReader(
-                 new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
-             PrintWriter out = new PrintWriter(
-                 new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true)) {
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+                PrintWriter out = new PrintWriter(
+                        new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true)) {
 
             String richiesta = in.readLine();
             if (richiesta == null) {
@@ -61,7 +60,7 @@ public class MioThread extends Thread {
             try (BufferedReader lettoreFile = new BufferedReader(
                     new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8))) {
                 out.println("OK FILE");
-                out.println();
+                out.println(); // Riga vuota
 
                 String riga;
                 while ((riga = lettoreFile.readLine()) != null) {
@@ -76,7 +75,7 @@ public class MioThread extends Thread {
             }
 
         } catch (IOException e) {
-            System.err.println("Errore di comunicazione con il cliente: " + e.getMessage());
+            System.err.println("Errore di comunicazione con il client: " + e.getMessage());
         }
     }
 
@@ -95,4 +94,3 @@ public class MioThread extends Thread {
         out.println();
     }
 }
-
