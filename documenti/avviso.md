@@ -1,0 +1,2 @@
+# AVVISO
+* attenzione al cavo
